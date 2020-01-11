@@ -17,14 +17,14 @@ import java.sql.SQLException;
 public class ClientController {
 
     @RequestMapping(value = "client/check", method = RequestMethod.GET)
-    public String checkProductStatus(@RequestParam(name = "id", required = false, defaultValue = "0") String id,
+    public String checkProductStatus(@RequestParam(name = "id", required = false, defaultValue = "") String id,
                                      Model model) {
 
         Connection connection = BDConnection.getConnection();
 
         Product product = null;
 
-        if (!id.equals("0")) {
+        if (!id.isEmpty()) {
             PreparedStatement statement = null;
             try {
                 statement = connection.prepareStatement("select  a.\"Nomer\", t.\"Naim\", s.\"Status\", z.\"Data_oformlenya\"\n " +
