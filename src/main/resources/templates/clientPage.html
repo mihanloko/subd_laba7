@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <title>Центр сервисного ремонта</title>
+    <link rel="stylesheet" href="/css/bootstrap.css"/>
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/jquery-3.4.1.js"></script>
+</head>
+<body>
+
+<form th:action="@{check}" method="get">
+    <label> Номер товара
+        <input type="text" name="id">
+    </label>
+    <button type="submit">Отправить</button>
+</form>
+
+<div th:if="${product}!=null">
+    <p th:text="${product.number}"></p>
+    <p th:text="${product.name}"></p>
+    <p th:text="${product.date}"></p>
+    <p th:text="${product.status}"></p>
+</div>
+
+</body>
+</html>
