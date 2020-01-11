@@ -1,4 +1,4 @@
-package subd.laba7;
+package subd.laba7.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

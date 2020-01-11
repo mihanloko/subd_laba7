@@ -1,4 +1,4 @@
-package subd.laba7;
+package subd.laba7.entities;
 
 public class LineClass {
     private String id, defect;
