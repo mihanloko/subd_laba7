@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class Laba7Application {
-
+    // application
     public static void main(String[] args) {
 
         try {
