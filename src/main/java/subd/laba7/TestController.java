@@ -44,7 +44,14 @@ public class TestController {
         }
 
         model.addAttribute("name", "world");
+        model.addAttribute("formClass", new FormClass());
         return "mainPage";
+    }
+
+    @RequestMapping(value = "/formData", method = RequestMethod.POST)
+    public String form(FormClass formClass) {
+        System.out.println(formClass);
+        return "redirect:/";
     }
 
 }

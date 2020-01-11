@@ -19,6 +19,12 @@
     <p th:text="${line.defect}">
 </div>
 
+<form th:object="${formClass}" th:action="@{/formData}" method="post">
+<input type="text" th:field="*{id}" />
+<input type="text" th:field="*{name}" />
+    <button type="submit">submit</button>
+</form>
+
 <!-- Connected jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
