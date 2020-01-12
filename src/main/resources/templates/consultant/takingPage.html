@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <title>Принятие товара</title>
+    <link rel="stylesheet" href="/css/bootstrap.css"/>
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/jquery-3.4.1.js"></script>
+</head>
+<body>
+
+<form method="get" th:action="@{takingProduct}">
+    <input type="hidden" value="${pk}" name="pk">
+    <label>ФИО
+        <input type="text" name="fio">
+    </label><br>
+
+    <label>Номер телефона
+        <input type="text" name="number">
+    </label><br>
+
+    <label>Название товара
+        <input type="text" name="naim">
+    </label><br>
+
+    <label>Дата начала гарантии
+        <input type="date" name="dataStart">
+    </label><br>
+
+    <label>Заводской номер
+        <input type="text" name="zavNumber">
+    </label><br>
+
+    <label>Продавец
+        <input type="text" name="prod">
+    </label><br>
+
+    <label>Информация об изделии
+        <input type="text" name="inf">
+    </label><br>
+
+    <label>Паспортные данные
+        <input type="text" name="passport">
+    </label><br>
+
+    <label>Дата продажи
+        <input type="date" name="dataProd">
+    </label><br>
+
+    <label>Описание состояние товара
+        <input type="text" name="sost">
+    </label><br>
+
+    <label>Подробное описание проблемы
+        <input type="text" name="problem">
+    </label><br>
+
+
+    <button type="submit">Принять товар</button>
+</form>
+
+</body>
+</html>

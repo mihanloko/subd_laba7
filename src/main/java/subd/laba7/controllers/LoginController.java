@@ -68,7 +68,7 @@ public class LoginController {
                 attributes.addAttribute("pk", pk);
                 switch (role) {
                     case CONSULTANT:
-                        return "redirect:cons";
+                        return "redirect:consultant/home";
                     case EXPERT:
                         return "redirect:expert/check";
                     case REPAIR:
