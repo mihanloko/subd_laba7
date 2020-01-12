@@ -39,6 +39,8 @@ public class AdminController {
                 case REPAIR:
                     statement = connection.prepareStatement("select insert_remontnik(?, ?)");
                     break;
+                default:
+                    return "redirect:add";
             }
             statement.setString(1, fio);
             statement.setString(2, number);
