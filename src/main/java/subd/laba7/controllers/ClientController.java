@@ -3,7 +3,9 @@ package subd.laba7.controllers;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import subd.laba7.database.BDConnection;
 import subd.laba7.entities.Product;
 
@@ -38,7 +40,7 @@ public class ClientController {
                     product.setName(resultSet.getString("Naim"));
                     product.setDate(resultSet.getString("Data_oformlenya"));
                     product.setNumber(resultSet.getString("Nomer"));
-                    //product.setStatus(resultSet.getString("Status"));
+                    product.setStatus(resultSet.getString("Status"));
                 }
             } catch (SQLException e) {
                 log.error("Ошибка при подготовке запроса на состояние товара", e);

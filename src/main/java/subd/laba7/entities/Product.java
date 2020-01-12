@@ -8,5 +8,5 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class Product {
-    private String id, name, number, date;
+    private String id, name, number, date, status;
 }
