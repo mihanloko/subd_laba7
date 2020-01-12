@@ -16,10 +16,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Controller
 @Slf4j
 public class ExpertController {
-
     /**
      * Посмотреть товары которые надо проэкспектировать - список товаров,
      * здесь можно будет выбрать товар для проведения экспертизы *
@@ -27,45 +27,46 @@ public class ExpertController {
      * @return
      */
     @RequestMapping(value = "expert/check", method = RequestMethod.GET)
-    public String checkProductStatus(@RequestParam(name = "pk_tovara") String pk_tovara,
+    public String checkProductStatus(@RequestParam(name = "pk_tovara", required = false, defaultValue = "") String pk_tovara,
                                      @RequestParam(name = "pk", required = false, defaultValue = "") String pk,
                                      Model model) {
-
         Connection connection = BDConnection.getConnection();
         List<Product> products= new ArrayList<>();
         PreparedStatement statement = null;
-        if (pk_tovara.equals("")) {
+        if (!pk_tovara.equals("")) {
             try {
-                statement = connection.prepareStatement("select * from get_products_by_status(1);");
-                ResultSet resultSet = statement.executeQuery();
-                while (resultSet.next()) {
-                    Product product = new Product();
-                    product.setId(resultSet.getString("id"));
-                    product.setDate(resultSet.getString("Data_oformlenya"));
-                    product.setNumber(resultSet.getString("zavod_number"));
-                    product.setName(resultSet.getString("naim"));
-                    products.add(product);
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-                log.error("Ошибка при подготовке запроса на состояние товара", e);
-            }
-            // в результате получили список products - его надо запихать в таблицу
-            model.addAttribute("listProducts", products);
-        } else {
-            try {
-                statement = connection.prepareStatement("select take_product_for_expertise(4);");
-                statement.executeQuery();
-                statement = connection.prepareStatement(" insert into \"Expert_otchet_o_tovar\" (\"PK_expertn_otcheta_o_tovar\", \"PK_experta\", \"PK_tovar\")\n" +
-                        " values (default, ?, ?);");
-                statement.setString(1, pk); // todo где то будет взят из глобальной области pk_experta
-                statement.setString(2, pk_tovara); // PK_TOVAR
-                statement.executeQuery();
+                int int_pk_tovara = Integer.parseInt(pk_tovara);
+                int int_pk = Integer.parseInt(pk);
+                statement = connection.prepareStatement("select take_product_for_expertise(?);");
+                statement.setInt(1, int_pk_tovara);
+                statement.execute();
+                statement = connection.prepareStatement(" insert into \"Expert_otchet_o_tovar\" (\"PK_expertn_otcheta_o_tovar\", \"PK_experta\", \"PK_tovar\") values (default, ?, ?);");
+                statement.setInt(1, int_pk); // todo где то будет взят из глобальной области pk_experta
+                statement.setInt(2, int_pk_tovara); // PK_TOVAR
+                statement.execute();
             } catch (SQLException e) {
                 e.printStackTrace();
                 log.error("Ошибка при подготовке запроса на состояние товара", e);
             }
         }
+        try {
+            statement = connection.prepareStatement("select * from get_products_by_status(1);");
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Product product = new Product();
+                product.setId(resultSet.getString("id"));
+                product.setDate(resultSet.getString("Data_oformlenya"));
+                product.setNumber(resultSet.getString("zavod_number"));
+                product.setName(resultSet.getString("naim"));
+                products.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            log.error("Ошибка при подготовке запроса на состояние товара", e);
+        }
+        // в результате получили список products - его надо запихать в таблицу
+        model.addAttribute("listProducts", products);
+        model.addAttribute("pk", pk);
         return "expert/expertPage";
     }
 
