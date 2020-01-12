@@ -19,7 +19,8 @@ public class RemontnikContoller {
     }
 
     @RequestMapping(value = "remontnik/todo", method = RequestMethod.GET)
-    String listWorks() {
+    String listWorks(@RequestParam(name = "pk", defaultValue = "") String pk, Model model) {
+        model.addAttribute("pk", pk);
         return "remontnik/listWorks";
     }
 }
