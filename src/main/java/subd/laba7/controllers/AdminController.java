@@ -16,12 +16,12 @@ public class AdminController {
     private static final int CONSULTANT = 0, EXPERT = 1, REPAIR = 2;
 
     @RequestMapping(value = "admin/add")
-    public String addConsultant() {
+    public String addPage() {
         return "registrationPage";
     }
 
     @RequestMapping(value = "admin/adding", method = RequestMethod.POST)
-    public String addExpert(@RequestParam(name = "fio") String fio,
+    public String adding(@RequestParam(name = "fio") String fio,
                             @RequestParam(name = "number") String number,
                             @RequestParam(name = "role") Integer role) {
 
