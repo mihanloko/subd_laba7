@@ -106,7 +106,8 @@ public class ExpertController {
         if (!id.isEmpty()) {
             PreparedStatement statement = null;
             try {
-                statement = connection.prepareStatement("select * from get_products_by_status(1);");
+                //todo здесь должен передавать pk_experta
+                statement = connection.prepareStatement("select * from get_products_experta(1);");
                 ResultSet resultSet = statement.executeQuery();
                 while (resultSet.next()) {
                     Product product = new Product();
@@ -126,31 +127,27 @@ public class ExpertController {
     }
 
     /**
-     * Забрать на экспертизу - для изменения статуса товара
+     * Занести результаты экспертизы
      * @param id
      * @param model
      * @return
      */
     @RequestMapping(value = "expert/check", method = RequestMethod.GET)
-    public String takeProduct(@RequestParam(name = "id", required = false, defaultValue = "") String id,
+    public String takeProductForOtchet(@RequestParam(name = "id", required = false, defaultValue = "") String id,
                               Model model) {
         Connection connection = BDConnection.getConnection();
         if (!id.isEmpty()) {
             PreparedStatement statement = null;
             try {
-                statement = connection.prepareStatement("select take_product_for_expertise(4);");
-                statement.executeQuery();
-                statement = connection.prepareStatement(" insert into \"Expert_otchet_o_tovar\" (\"PK_expertn_otcheta_o_tovar\", \"PK_experta\", \"PK_tovar\")\n" +
-                        " values (default, ?, ?);");
-                statement.setString(1, "1"); // todo где то будет взят из глобальной области pk_experta
-                statement.setString(2, id); // PK_TOVAR
-                statement.executeQuery();
+                //statement = connection.prepareStatement("select * from \"Expert_otchet_o_tovar\" e where e.\"PK_tovar\" = ?;");
+               // statement.setString(1, id);
+                ResultSet resultSet = statement.executeQuery();
             } catch (SQLException e) {
                 e.printStackTrace();
                 log.error("Ошибка при подготовке запроса на состояние товара", e);
             }
         }
-        // в результате изменили статус товара
+        // resultSet - здесь будут все поля необходимые для заполнения формы отчета
         return "clientPage";
     }
 }
