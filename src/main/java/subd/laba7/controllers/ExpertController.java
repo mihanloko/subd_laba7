@@ -23,20 +23,18 @@ public class ExpertController {
     /**
      * Посмотреть товары которые надо проэкспектировать - список товаров,
      * здесь можно будет выбрать товар для проведения экспертизы *
-     * @param id
      * @param model
      * @return
      */
     @RequestMapping(value = "expert/check", method = RequestMethod.GET)
-    public String checkProductStatus(@RequestParam(name = "id", required = false, defaultValue = "") String id,
+    public String checkProductStatus(@RequestParam(name = "pk_tovara") String pk_tovara,
+                                     @RequestParam(name = "pk", required = false, defaultValue = "") String pk,
                                      Model model) {
 
         Connection connection = BDConnection.getConnection();
-
         List<Product> products= new ArrayList<>();
-
-        if (id.equals("")) {
-            PreparedStatement statement = null;
+        PreparedStatement statement = null;
+        if (pk_tovara.equals("")) {
             try {
                 statement = connection.prepareStatement("select * from get_products_by_status(1);");
                 ResultSet resultSet = statement.executeQuery();
@@ -52,10 +50,23 @@ public class ExpertController {
                 e.printStackTrace();
                 log.error("Ошибка при подготовке запроса на состояние товара", e);
             }
+            // в результате получили список products - его надо запихать в таблицу
+            model.addAttribute("listProducts", products);
+        } else {
+            try {
+                statement = connection.prepareStatement("select take_product_for_expertise(4);");
+                statement.executeQuery();
+                statement = connection.prepareStatement(" insert into \"Expert_otchet_o_tovar\" (\"PK_expertn_otcheta_o_tovar\", \"PK_experta\", \"PK_tovar\")\n" +
+                        " values (default, ?, ?);");
+                statement.setString(1, pk); // todo где то будет взят из глобальной области pk_experta
+                statement.setString(2, pk_tovara); // PK_TOVAR
+                statement.executeQuery();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                log.error("Ошибка при подготовке запроса на состояние товара", e);
+            }
         }
-        model.addAttribute("listProducts", products);
-        // в результате получили список products - его надо запихать в таблицу
-        return "expertPage";
+        return "expert/expertPage";
     }
 
     /**
@@ -84,7 +95,7 @@ public class ExpertController {
             }
         }
         // в результате изменили статус товара
-        return "expertPage";
+        return "expert/expertPage";
     }
 
     /**
@@ -123,7 +134,7 @@ public class ExpertController {
             }
         }
         // в результате получили список products - его надо запихать в таблицу
-        return "expertPage";
+        return "expert/expertPage";
     }
 
     /**
@@ -148,6 +159,6 @@ public class ExpertController {
             }
         }
         // resultSet - здесь будут все поля необходимые для заполнения формы отчета
-        return "expertPage";
+        return "expert/expertPage";
     }
 }
