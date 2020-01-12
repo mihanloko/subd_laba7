@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <title>Центр сервисного ремонта</title>
+    <link rel="stylesheet" href="/css/bootstrap.css"/>
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/jquery-3.4.1.js"></script>
+</head>
+<body>
+
+<form th:action="@{adding}" method="post">
+    <select name="role">
+        <option value="0" selected>Консультант</option>
+        <option value="1">Эксперт</option>
+        <option value="2">Ремонтник</option>
+    </select>
+    <label> ФИО
+        <input type="text" name="fio">
+    </label>
+    <label> Табельный номер
+        <input type="text" name="number">
+    </label>
+    <button type="submit">Отправить</button>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Вход</title>
+    <link rel="stylesheet" href="/css/bootstrap.css"/>
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/jquery-3.4.1.js"></script>
+</head>
+
+<form th:action="@{checkNumber}" method="post">
+    <label>
+        <select name="role">
+            <option value="0" selected>Конусльтант</option>
+            <option value="1">Эксперт</option>
+            <option value="2">Ремонтник</option>
+        </select>
+    </label>
+    <br>
+    <label>Табельный номер
+        <input type="text" name="number">
+    </label>
+    <br>
+    <button type="submit">Отправить</button>
+</form>
+
+<div th:if="${error}!=null">
+    <p th:text="${error}"></p>
+</div>
+
+</body>
+</html>
