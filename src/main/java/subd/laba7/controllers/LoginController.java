@@ -70,7 +70,7 @@ public class LoginController {
                     case CONSULTANT:
                         return "redirect:cons";
                     case EXPERT:
-                        return "redirect:expert/check";
+                        return "redirect:expert/main";
                     case REPAIR:
                         return "redirect:rep";
                 }

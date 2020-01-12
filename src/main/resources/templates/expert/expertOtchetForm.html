@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <title>Экспертный отчет</title>
+    <link rel="stylesheet" href="/css/bootstrap.css"/>
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/jquery-3.4.1.js"></script>
+</head>
+<body>
+
+<form th:action="@{check}" method="get">
+    <label> Номер отчета
+        <input type="text" name="numberOtchet">
+    </label>
+    <label> Дата оформления
+        <input type="date" name="dataOform">
+    </label>
+    <label> Описание дефектов
+        <input type="text" name="defects">
+    </label>
+    <button type="submit">Оформить</button>
+</form>
+
+</body>
+</html>
