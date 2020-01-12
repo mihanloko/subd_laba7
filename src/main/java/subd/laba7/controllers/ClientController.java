@@ -38,7 +38,7 @@ public class ClientController {
                     product.setName(resultSet.getString("Naim"));
                     product.setDate(resultSet.getString("Data_oformlenya"));
                     product.setNumber(resultSet.getString("Nomer"));
-                    product.setStatus(resultSet.getString("Status"));
+                    //product.setStatus(resultSet.getString("Status"));
                 }
             } catch (SQLException e) {
                 log.error("Ошибка при подготовке запроса на состояние товара", e);
