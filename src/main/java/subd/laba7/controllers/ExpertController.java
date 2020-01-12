@@ -33,17 +33,16 @@ public class ExpertController {
 
         Connection connection = BDConnection.getConnection();
 
-
         List<Product> products= new ArrayList<>();
 
-        if (!id.isEmpty()) {
+        if (id.equals("")) {
             PreparedStatement statement = null;
             try {
                 statement = connection.prepareStatement("select * from get_products_by_status(1);");
                 ResultSet resultSet = statement.executeQuery();
                 while (resultSet.next()) {
                     Product product = new Product();
-                    product.setName(resultSet.getString("id"));
+                    product.setId(resultSet.getString("id"));
                     product.setDate(resultSet.getString("Data_oformlenya"));
                     product.setNumber(resultSet.getString("zavod_number"));
                     product.setName(resultSet.getString("naim"));
@@ -54,8 +53,9 @@ public class ExpertController {
                 log.error("Ошибка при подготовке запроса на состояние товара", e);
             }
         }
+        model.addAttribute("listProducts", products);
         // в результате получили список products - его надо запихать в таблицу
-        return "clientPage";
+        return "expertPage";
     }
 
     /**
@@ -64,7 +64,7 @@ public class ExpertController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "expert/check", method = RequestMethod.GET)
+    @RequestMapping(value = "expert/takeProduct", method = RequestMethod.GET)
     public String takeProduct(@RequestParam(name = "id", required = false, defaultValue = "") String id,
                                      Model model) {
         Connection connection = BDConnection.getConnection();
@@ -84,7 +84,7 @@ public class ExpertController {
             }
         }
         // в результате изменили статус товара
-        return "clientPage";
+        return "expertPage";
     }
 
     /**
@@ -94,7 +94,7 @@ public class ExpertController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "expert/check", method = RequestMethod.GET)
+    @RequestMapping(value = "expert/checkProductTodo", method = RequestMethod.GET)
     public String checkProductTodo(@RequestParam(name = "id", required = false, defaultValue = "") String id,
                                      Model model) {
 
@@ -123,7 +123,7 @@ public class ExpertController {
             }
         }
         // в результате получили список products - его надо запихать в таблицу
-        return "clientPage";
+        return "expertPage";
     }
 
     /**
@@ -132,7 +132,7 @@ public class ExpertController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "expert/check", method = RequestMethod.GET)
+    @RequestMapping(value = "expert/takeProductForOtchet", method = RequestMethod.GET)
     public String takeProductForOtchet(@RequestParam(name = "id", required = false, defaultValue = "") String id,
                               Model model) {
         Connection connection = BDConnection.getConnection();
@@ -148,6 +148,6 @@ public class ExpertController {
             }
         }
         // resultSet - здесь будут все поля необходимые для заполнения формы отчета
-        return "clientPage";
+        return "expertPage";
     }
 }
