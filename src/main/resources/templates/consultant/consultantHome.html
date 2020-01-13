@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <title>Центр сервисного ремонта - консультант</title>
+    <link rel="stylesheet" href="/css/bootstrap.css"/>
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/jquery-3.4.1.js"></script>
+</head>
+<body>
+
+<form method="get" th:action="@{takeProduct}">
+    <input type="hidden" th:value="${pk}" name="pk">
+    <button type="submit">Принять товар</button>
+</form>
+
+<br>
+<form method="get"  th:action="@{takingProductAkt}">
+    <input type="hidden" th:value="${pk}" name="pk">
+    <button type="submit">Выдача товара</button>
+</form>
+
+</body>
+</html>

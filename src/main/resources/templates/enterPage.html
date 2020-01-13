@@ -5,28 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <title>Вход</title>
     <link rel="stylesheet" href="/css/bootstrap.css"/>
-    <script src="/js/bootstrap.js"></script>
     <script src="/js/jquery-3.4.1.js"></script>
+    <script src="/js/bootstrap.js"></script>
 </head>
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <form th:action="@{checkNumber}" method="post">
+                <h1>Вход</h1>
+                <div class="row form-group">
+                    <div class="col">
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-secondary active">
+                                <input type="radio" name="role" id="opt1" autocomplete="off" value="0" checked> Конусльтант
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="radio" name="role" id="opt2" autocomplete="off" value="1"> Эксперт
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="radio" name="role" id="opt3" autocomplete="off" value="2"> Ремонтник
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col">
+                        <input type="text" name="number" class="form-control" placeholder="Табельный номер">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary form-control">Войти</button>
+                    </div>
+                </div>
+            </form>
 
-<form th:action="@{checkNumber}" method="post">
-    <label>
-        <select name="role">
-            <option value="0" selected>Конусльтант</option>
-            <option value="1">Эксперт</option>
-            <option value="2">Ремонтник</option>
-        </select>
-    </label>
-    <br>
-    <label>Табельный номер
-        <input type="text" name="number">
-    </label>
-    <br>
-    <button type="submit">Отправить</button>
-</form>
-
-<div th:if="${error}!=null">
-    <p th:text="${error}"></p>
+            <div th:if="${error}!=null">
+                <p th:text="${error}"></p>
+            </div>
+        </div>
+    </div>
 </div>
 
 </body>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <title>Центр сервисного ремонта</title>
+    <link rel="stylesheet" href="/css/bootstrap.css"/>
+    <script src="/js/jquery-3.4.1.js"></script>
+    <script src="/js/bootstrap.js"></script>
+</head>
+<body>
+
+<div class="container" th:fragment="menu">
+    <style>
+        .menuitem {
+            height: 80px;
+            background: #7abaff;
+        }
+        .menuitem:hover {
+            background: #c8e1ff;
+        }
+        .menuitem a {
+            width: 100%;
+            height: 100%;
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            text-align: center;
+            font-size: 20px;
+        }
+    </style>
+    <div class="row w100">
+        <div class="col menuitem"><a class="row align-items-center" href="" th:href="@{'/remontnik?pk={pk}'(pk=${pk})}"><div class="col">На главную</div></a></div>
+        <div class="col menuitem"><a class="row align-items-center" href="" th:href="@{'/remontnik/todo?pk={pk}'(pk=${pk})}"><div class="col">Мои активные работы</div></a></div>
+        <div class="col menuitem"><a class="row align-items-center" href="" th:href="@{'/login'}"><div class="col">Выйти</div></a></div>
+    </div>
+</div>
+
+<div class="container" th:fragment="content">
+
+</div>
+
+</body>
+</html>
