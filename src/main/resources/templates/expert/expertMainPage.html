@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <title>Центр сервисного ремонта - Эксперт</title>
+    <link rel="stylesheet" href="/css/bootstrap.css"/>
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/jquery-3.4.1.js"></script>
+</head>
+<body>
+
+<div class="row w100">
+    <div class="col menuitem"><a href="" th:href="@{'/login?pk={pk}'(pk=${pk})}">На главную</a></div>
+    <div class="col menuitem"><a href="" th:href="@{'/expert/check?pk={pk}'(pk=${pk})}">Посмотреть список товаров, требующих экспертизы</a></div>
+    <div class="col menuitem"><a href="" th:href="@{'/expert/checkProductTodo?pk={pk}'(pk=${pk})}">Посмотреть товары, которые за мной числятся</a></div>
+</div>
+
+</body>
+</html>

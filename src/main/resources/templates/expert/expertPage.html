@@ -10,9 +10,6 @@
     <script src="/js/jquery-3.4.1.js"></script>
 </head>
 <body>
-
-    <button type="submit">Посмотреть список товаров, требующих экспертизы</button>
-
     <div th:if="${not #lists.isEmpty(listProducts)}">
         <h2>Products</h2>
         <table class="table table-striped">
