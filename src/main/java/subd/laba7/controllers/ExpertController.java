@@ -161,6 +161,10 @@ public class ExpertController {
                 statement.setDate(4, dataOform);
                 statement.setString(5, defects);
                 statement.execute();
+
+                statement = connection.prepareStatement("update \"Tovar\" set \"PK_status_tovar\" = 6 where \"PK_tovar\" = ?;");
+                statement.setInt(1, int_pk_tovara);
+                statement.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
                 log.error("Ошибка при подготовке запроса на состояние товара", e);

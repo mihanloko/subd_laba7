@@ -11,7 +11,9 @@
 </head>
 <body>
 
-<form th:action="@{main}" method="get">
+<form th:action="@{takeProductForOtchet}" method="get">
+    <input type="hidden" th:value="${pk}" name="pk">
+    <input type="hidden" th:value="${pk_tovara}" name="pk_tovara">
     <label> Номер отчета
         <input type="text" name="numberOtchet">
     </label>
