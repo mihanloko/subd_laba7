@@ -11,11 +11,10 @@
 </head>
 <body>
 
-<form method="get" th:action="@{takingProduct}">
+<form method="get" th:action="@{oformProductAktVozvrataSecond}">
     <input type="hidden" th:value="${pk}" name="pk">
-    <label>ФИО
-        <input type="text" name="fio">
-    </label><br>
+    <input type="hidden" th:value="${pk_tovara}" name="pk_tovara">
+
 
     <label>Номер акта
         <input type="text" name="number">

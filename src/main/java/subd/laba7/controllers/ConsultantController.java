@@ -168,10 +168,14 @@ public class ConsultantController {
                 statement = connection.prepareStatement("insert into \"Akt_vosvrata_tovar\" (\"PK_akt_vozvrata\", \"Nomer\", \"Data\", \"Sostoyanie_tovar\", \"PK_kosultant\", \"PK_tovar\") values (default, ?, ?, ?, ?, ?);");
                 statement.setString(1, numberOtchet);
                 statement.setDate(2, dataOform);
-                statement.setBoolean(3, Boolean.valueOf(problem));
+                statement.setBoolean(3, problem.equals("on"));
                 statement.setInt(4, int_pk);
                 statement.setInt(5, int_pk_tovara);
                 statement.execute();
+
+                statement = connection.prepareStatement("update \"Tovar\" set \"PK_status_tovar\" = 7 where \"PK_tovar\" = ?;");
+                statement.setInt(1, int_pk_tovara);
+                statement.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
                 log.error("Ошибка при подготовке запроса на состояние товара", e);
