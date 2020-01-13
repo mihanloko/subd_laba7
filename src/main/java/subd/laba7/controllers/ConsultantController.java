@@ -8,8 +8,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import subd.laba7.database.BDConnection;
+import subd.laba7.entities.Product;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 @Controller
@@ -103,4 +106,35 @@ public class ConsultantController {
         return "redirect:home";
     }
 
+    /**
+     * Посмотреть товары которые надо вернуть - список товаров,
+     * здесь можно будет выбрать товар и перейти к оформлению об акте возврата
+     * @return
+     */
+    @RequestMapping(value = "consultant/takingProductAkt", method = RequestMethod.GET)
+    public String checkProductStatus(@RequestParam(name = "pk", required = false, defaultValue = "") String pk,
+                                     Model model) {
+        Connection connection = BDConnection.getConnection();
+        List<Product> products= new ArrayList<>();
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement("select * from get_products_by_status(3);");
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Product product = new Product();
+                product.setId(resultSet.getString("id"));
+                product.setDate(resultSet.getString("Data_oformlenya"));
+                product.setNumber(resultSet.getString("zavod_number"));
+                product.setName(resultSet.getString("naim"));
+                products.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            log.error("Ошибка при подготовке запроса на состояние товара", e);
+        }
+        // в результате получили список products - его надо запихать в таблицу
+        model.addAttribute("listProducts", products);
+        model.addAttribute("pk", pk);
+        return "consultant/tableResult";
+    }
 }

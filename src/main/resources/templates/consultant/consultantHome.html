@@ -17,8 +17,8 @@
 </form>
 
 <br>
-<form method="get"  th:action="@{takeProduct}">
-    <input type="hidden" value="${pk}" name="pk">
+<form method="get"  th:action="@{takingProductAkt}">
+    <input type="hidden" th:value="${pk}" name="pk">
     <button type="submit">Выдача товара</button>
 </form>
 

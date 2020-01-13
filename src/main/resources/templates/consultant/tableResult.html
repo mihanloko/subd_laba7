@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <title>Центр сервисного ремонта - Консультант</title>
+    <link rel="stylesheet" href="/css/bootstrap.css"/>
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/jquery-3.4.1.js"></script>
+</head>
+<body>
+
+<div th:if="${not #lists.isEmpty(listProducts)}">
+    <h2>Products</h2>
+    <table class="table table-striped">
+        <tr>
+            <th>Id</th>
+            <th>date</th>
+            <th>number</th>
+            <th>name</th>
+        </tr>
+        <tr th:each="product : ${listProducts}">
+            <td th:text="${product.id}"></td>
+            <td th:text="${product.date}"></td>
+            <td th:text="${product.number}"></td>
+            <td th:text="${product.name}"></td>
+            <td>
+                <form th:action="@{check}" method="get">
+                    <input name="pk_tovara" type="hidden" th:value="${product.id}">
+                    <button type="submit">Перейти к оформлению об акте возврата</button>
+                    <input name="pk" type="hidden" th:value="${pk}">
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
