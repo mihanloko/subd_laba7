@@ -26,10 +26,11 @@
             <td th:text="${product.number}"></td>
             <td th:text="${product.name}"></td>
             <td>
-                <form th:action="@{check}" method="get">
+
+                <form method="get" th:action="@{oformProductAktVozvrataFirst}">
+                    <input type="hidden" th:value="${pk}" name="pk">
                     <input name="pk_tovara" type="hidden" th:value="${product.id}">
                     <button type="submit">Перейти к оформлению об акте возврата</button>
-                    <input name="pk" type="hidden" th:value="${pk}">
                 </form>
             </td>
         </tr>

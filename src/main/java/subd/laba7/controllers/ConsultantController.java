@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+
 @Controller
 @Slf4j
 public class ConsultantController {
@@ -27,7 +28,6 @@ public class ConsultantController {
 
     @RequestMapping(value = "consultant/takeProduct", method = RequestMethod.GET)
     public String take(@RequestParam(name = "pk") String pk, Model model) {
-
         model.addAttribute("pk", pk);
         return "consultant/takingPage";
     }
@@ -136,5 +136,48 @@ public class ConsultantController {
         model.addAttribute("listProducts", products);
         model.addAttribute("pk", pk);
         return "consultant/tableResult";
+    }
+
+
+
+        @RequestMapping(value = "consultant/oformProductAktVozvrataFirst", method = RequestMethod.GET)
+    public String takingProductOformAktFirst(
+                @RequestParam(name = "pk", required = false, defaultValue = "") String pk,
+                @RequestParam(name = "pk_tovara", required = false, defaultValue = "") String pk_tovara,
+                                             Model model) {
+        model.addAttribute("pk", pk);
+        model.addAttribute("pk_tovara", pk_tovara);
+        return "consultant/oformAktVozvrata";
+    }
+
+
+    @RequestMapping(value = "consultant/oformProductAktVozvrataSecond", method = RequestMethod.GET)
+    public String takingProductOformAktSecond(
+                                @RequestParam(name = "pk", required = false, defaultValue = "") String pk,
+                                @RequestParam(name = "pk_tovara", required = false, defaultValue = "") String pk_tovara,
+                                @RequestParam(name = "number", required = false, defaultValue = "") String numberOtchet,
+                                @RequestParam(name = "dataOform", required = false) Date dataOform,
+                                @RequestParam(name = "problem", required = false, defaultValue = "") String problem,
+                                RedirectAttributes attributes) {
+
+        Connection connection = BDConnection.getConnection();
+        int int_pk = Integer.parseInt(pk);
+        int int_pk_tovara = Integer.parseInt(pk_tovara);
+        PreparedStatement statement = null;
+            try {
+                statement = connection.prepareStatement("insert into \"Akt_vosvrata_tovar\" (\"PK_akt_vozvrata\", \"Nomer\", \"Data\", \"Sostoyanie_tovar\", \"PK_kosultant\", \"PK_tovar\") values (default, ?, ?, ?, ?, ?);");
+                statement.setString(1, numberOtchet);
+                statement.setDate(2, dataOform);
+                statement.setBoolean(3, Boolean.valueOf(problem));
+                statement.setInt(4, int_pk);
+                statement.setInt(5, int_pk_tovara);
+                statement.execute();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                log.error("Ошибка при подготовке запроса на состояние товара", e);
+            }
+            // resultSet - здесь будут все поля необходимые для заполнения формы отчета
+        attributes.addAttribute("pk", pk);
+        return "redirect:home";
     }
 }
