@@ -12,7 +12,7 @@
 <body>
 
 <form method="get" th:action="@{takingProduct}">
-    <input type="hidden" value="${pk}" name="pk">
+    <input type="hidden" th:value="${pk}" name="pk">
     <label>ФИО
         <input type="text" name="fio">
     </label><br>

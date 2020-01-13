@@ -12,12 +12,12 @@
 <body>
 
 <form method="get" th:action="@{takeProduct}">
-    <input type="hidden" value="${pk}" name="pk">
+    <input type="hidden" th:value="${pk}" name="pk">
     <button type="submit">Принять товар</button>
 </form>
 
 <br>
-<form method="get"  th:action="@{}">
+<form method="get"  th:action="@{takeProduct}">
     <input type="hidden" value="${pk}" name="pk">
     <button type="submit">Выдача товара</button>
 </form>
