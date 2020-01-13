@@ -25,7 +25,7 @@
             <td th:text="${product.number}"></td>
             <td th:text="${product.name}"></td>
             <td>
-                <form th:action="@{check}" method="get">
+                <form th:action="@{takeProductForOtchet}" method="get">
                     <div class="col menuitem"><a href="" th:href="@{'/expert/takeProductForOtchet?pk={pk}'(pk=${pk},pk_tovara=${product.id})}">Оформить отчет по товару</a></div>
                     <input name="pk_tovara" type="hidden" th:value="${product.id}">
                     <input name="pk" type="hidden" th:value="${pk}">

@@ -14,9 +14,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
+import java.text.SimpleDateFormat;
+import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -144,27 +144,34 @@ public class ExpertController {
     public String takeProductForOtchet(@RequestParam(name = "pk_tovara", required = false, defaultValue = "") String pk_tovara,
                                        @RequestParam(name = "pk", required = false, defaultValue = "") String pk,
                                        @RequestParam(name = "numberOtchet", required = false, defaultValue = "") String numberOtchet,
-                                       @RequestParam(name = "dataOform", required = false, defaultValue = "") String dataOform,
+                                       @RequestParam(name = "dataOform", required = false) Date dataOform,
                                        @RequestParam(name = "defects", required = false, defaultValue = "") String defects,
                                        Model model) {
         Connection connection = BDConnection.getConnection();
         int int_pk = Integer.parseInt(pk);
         int int_pk_tovara = Integer.parseInt(pk_tovara);
 
-
-        PreparedStatement statement = null;
+        if (!(numberOtchet.equals("") && dataOform == null && defects.equals(""))) {
+            PreparedStatement statement = null;
             try {
                 statement = connection.prepareStatement("select update_expert_otchet(?, ?, ?, ?, ?);");
                 statement.setInt(1, int_pk_tovara);
                 statement.setInt(2, int_pk);
                 statement.setString(3, numberOtchet);
+                statement.setDate(4, dataOform);
                 statement.setString(5, defects);
                 statement.execute();
             } catch (SQLException e) {
                 e.printStackTrace();
                 log.error("Ошибка при подготовке запроса на состояние товара", e);
             }
-        // resultSet - здесь будут все поля необходимые для заполнения формы отчета
+            // resultSet - здесь будут все поля необходимые для заполнения формы отчета
+            model.addAttribute("pk_tovara", pk_tovara);
+            model.addAttribute("pk", pk);
+            return "redirect:main";
+        }
+        model.addAttribute("pk_tovara", pk_tovara);
+        model.addAttribute("pk", pk);
         return "expert/expertOtchetForm";
     }
 }
