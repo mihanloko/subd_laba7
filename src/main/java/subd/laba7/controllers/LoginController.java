@@ -72,7 +72,7 @@ public class LoginController {
                     case EXPERT:
                         return "redirect:expert/check";
                     case REPAIR:
-                        return "redirect:rep";
+                        return "redirect:remontnik";
                 }
             }
             else {
