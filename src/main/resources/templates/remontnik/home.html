@@ -32,7 +32,9 @@
     </style>
     <div class="row w100">
         <div class="col menuitem"><a class="row align-items-center" href="" th:href="@{'/remontnik?pk={pk}'(pk=${pk})}"><div class="col">На главную</div></a></div>
-        <div class="col menuitem"><a class="row align-items-center" href="" th:href="@{'/remontnik/todo?pk={pk}'(pk=${pk})}"><div class="col">Мои активные работы</div></a></div>
+        <div class="col menuitem"><a class="row align-items-center" href="" th:href="@{'/remontnik/todo?pk={pk}'(pk=${pk})}"><div class="col">Ожидают ремонта</div></a></div>
+        <div class="col menuitem"><a class="row align-items-center" href="" th:href="@{'/remontnik/rem?pk={pk}'(pk=${pk})}"><div class="col">Мои ремонты</div></a></div>
+        <div class="col menuitem"><a class="row align-items-center" href="" th:href="@{'/remontnik/zapch?pk={pk}'(pk=${pk})}"><div class="col">Запчасти</div></a></div>
         <div class="col menuitem"><a class="row align-items-center" href="" th:href="@{'/login'}"><div class="col">Выйти</div></a></div>
     </div>
 </div>
