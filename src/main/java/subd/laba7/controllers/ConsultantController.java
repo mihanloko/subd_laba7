@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Random;
 
 
+
 @Controller
 @Slf4j
 public class ConsultantController {
@@ -156,7 +157,7 @@ public class ConsultantController {
                                 @RequestParam(name = "pk", required = false, defaultValue = "") String pk,
                                 @RequestParam(name = "pk_tovara", required = false, defaultValue = "") String pk_tovara,
                                 @RequestParam(name = "number", required = false, defaultValue = "") String numberOtchet,
-                                @RequestParam(name = "dataOform", required = false) Date dataOform,
+                                @RequestParam(name = "dataOform", required = false, defaultValue = "") String dataOform,
                                 @RequestParam(name = "problem", required = false, defaultValue = "") String problem,
                                 RedirectAttributes attributes) {
 
@@ -167,15 +168,16 @@ public class ConsultantController {
             try {
                 statement = connection.prepareStatement("insert into \"Akt_vosvrata_tovar\" (\"PK_akt_vozvrata\", \"Nomer\", \"Data\", \"Sostoyanie_tovar\", \"PK_kosultant\", \"PK_tovar\") values (default, ?, ?, ?, ?, ?);");
                 statement.setString(1, numberOtchet);
-                statement.setDate(2, dataOform);
+                statement.setDate(2, Date.valueOf(dataOform));
                 statement.setBoolean(3, problem.equals("on"));
                 statement.setInt(4, int_pk);
                 statement.setInt(5, int_pk_tovara);
                 statement.execute();
 
-                statement = connection.prepareStatement("update \"Tovar\" set \"PK_status_tovar\" = 7 where \"PK_tovar\" = ?;");
+                statement = connection.prepareStatement("select update_product_status(?, ?);");
                 statement.setInt(1, int_pk_tovara);
-                statement.executeUpdate();
+                statement.setInt(2, 7);
+                statement.execute();
             } catch (SQLException e) {
                 e.printStackTrace();
                 log.error("Ошибка при подготовке запроса на состояние товара", e);

@@ -162,9 +162,10 @@ public class ExpertController {
                 statement.setString(5, defects);
                 statement.execute();
 
-                statement = connection.prepareStatement("update \"Tovar\" set \"PK_status_tovar\" = 6 where \"PK_tovar\" = ?;");
+                statement = connection.prepareStatement("select update_product_status(?, ?);");
                 statement.setInt(1, int_pk_tovara);
-                statement.executeUpdate();
+                statement.setInt(2, 6);
+                statement.execute();
             } catch (SQLException e) {
                 e.printStackTrace();
                 log.error("Ошибка при подготовке запроса на состояние товара", e);
