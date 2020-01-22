@@ -36,7 +36,7 @@ public class RemontnikContoller {
         Connection connection = BDConnection.getConnection();
         PreparedStatement statement = null;
 
-        Product product= new Product();
+        Product product = new Product();
         boolean productFound = false;
 
         try {
@@ -58,7 +58,7 @@ public class RemontnikContoller {
                 model.addAttribute("productDefect", resultSet.getString("Podrobn_opisan_obl_probl"));
             }
 
-            ArrayList<ProductInfo> listOtch  = new ArrayList<>();
+            ArrayList<ProductInfo> listOtch = new ArrayList<>();
 
             statement = connection.prepareStatement("select * from \"Expert_otchet_o_tovar\" where \"PK_tovar\" = ?;");
             statement.setInt(1, int_pk_tovar);
@@ -70,8 +70,7 @@ public class RemontnikContoller {
                 listOtch.add(p);
             }
             model.addAttribute("listOtch", listOtch);
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             log.error("Ошибка при обработке запроса");
             e.printStackTrace();
         }
@@ -88,7 +87,7 @@ public class RemontnikContoller {
         Connection connection = BDConnection.getConnection();
         PreparedStatement statement = null;
 
-        List<Product> products= new ArrayList<>();
+        List<Product> products = new ArrayList<>();
 
         try {
             statement = connection.prepareStatement("select * from get_products_by_status(6);");
@@ -101,8 +100,7 @@ public class RemontnikContoller {
                 product.setName(resultSet.getString("naim"));
                 products.add(product);
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             log.error("Ошибка при обработке запроса");
             e.printStackTrace();
         }
@@ -113,7 +111,7 @@ public class RemontnikContoller {
     @RequestMapping(value = "remontnik/setRem", method = RequestMethod.GET)
     String setRem(@RequestParam(name = "pk", defaultValue = "") String pk,
                   @RequestParam(name = "pk_tovar", defaultValue = "") String pk_tovar,
-                     Model model) {
+                  Model model) {
         model.addAttribute("pk", pk);
 
         Connection connection = BDConnection.getConnection();
@@ -124,8 +122,7 @@ public class RemontnikContoller {
             statement = connection.prepareStatement("select take_product_for_repair(?);");
             statement.setInt(1, int_pk_tovar);
             statement.execute();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             log.error("Ошибка при обработке запроса");
             e.printStackTrace();
         }
@@ -135,13 +132,13 @@ public class RemontnikContoller {
 
     @RequestMapping(value = "remontnik/rem", method = RequestMethod.GET)
     String listRem(@RequestParam(name = "pk", defaultValue = "") String pk,
-                     Model model) {
+                   Model model) {
         model.addAttribute("pk", pk);
 
         Connection connection = BDConnection.getConnection();
         PreparedStatement statement = null;
 
-        List<Product> products= new ArrayList<>();
+        List<Product> products = new ArrayList<>();
 
         try {
             statement = connection.prepareStatement("select * from get_products_by_status(5);");
@@ -154,8 +151,7 @@ public class RemontnikContoller {
                 product.setName(resultSet.getString("naim"));
                 products.add(product);
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             log.error("Ошибка при обработке запроса");
             e.printStackTrace();
         }
@@ -174,7 +170,7 @@ public class RemontnikContoller {
         Connection connection = BDConnection.getConnection();
         PreparedStatement statement = null;
 
-        Product product= new Product();
+        Product product = new Product();
         boolean productFound = false;
 
         try {
@@ -188,8 +184,7 @@ public class RemontnikContoller {
                 product.setNumber(resultSet.getString("Zavodsokoi_nomer"));
                 product.setName(resultSet.getString("Naim"));
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             log.error("Ошибка при обработке запроса");
             e.printStackTrace();
         }
@@ -223,8 +218,7 @@ public class RemontnikContoller {
             statement.setInt(1, int_pk_tovar);
             statement.setInt(2, 3);
             statement.execute();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             log.error("Ошибка при обработке запроса");
             e.printStackTrace();
             return "redirect:finishRem?pk=".concat(pk).concat("&pk_tovar=").concat(pk_tovar).concat("&err=Invalid date");
@@ -234,13 +228,13 @@ public class RemontnikContoller {
 
     @RequestMapping(value = "remontnik/zapch", method = RequestMethod.GET)
     String zapch(@RequestParam(name = "pk", defaultValue = "") String pk,
-                   Model model) {
+                 Model model) {
         model.addAttribute("pk", pk);
 
         Connection connection = BDConnection.getConnection();
         PreparedStatement statement = null;
 
-        List<Zapch> zapch= new ArrayList<>();
+        List<Zapch> zapch = new ArrayList<>();
 
         try {
             statement = connection.prepareStatement("select * from \"Zapchast\"");
@@ -253,8 +247,7 @@ public class RemontnikContoller {
                 z.setCena(resultSet.getString("Cena"));
                 zapch.add(z);
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             log.error("Ошибка при обработке запроса");
             e.printStackTrace();
         }
@@ -264,10 +257,10 @@ public class RemontnikContoller {
 
     @RequestMapping(value = "remontnik/addZapch", method = RequestMethod.POST)
     String addZpach(@RequestParam(name = "pk", defaultValue = "") String pk,
-                                @RequestParam(name = "tip", defaultValue = "") String tip,
-                                @RequestParam(name = "naim", defaultValue = "") String naim,
-                                @RequestParam(name = "cena", defaultValue = "") String cena,
-                                Model model) {
+                    @RequestParam(name = "tip", defaultValue = "") String tip,
+                    @RequestParam(name = "naim", defaultValue = "") String naim,
+                    @RequestParam(name = "cena", defaultValue = "") String cena,
+                    Model model) {
 
         Connection connection = BDConnection.getConnection();
         PreparedStatement statement = null;
@@ -278,12 +271,42 @@ public class RemontnikContoller {
             statement.setString(2, naim);
             statement.setInt(3, Integer.parseInt(cena));
             statement.execute();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             log.error("Ошибка при обработке запроса");
             e.printStackTrace();
             return "redirect:zapch?pk=".concat(pk).concat("&err=Invalid adding");
         }
         return "redirect:zapch?pk=".concat(pk);
+    }
+
+
+    @RequestMapping(value = "remontnik/productZapch", method = RequestMethod.GET)
+    String productZapch(@RequestParam(name = "pk", defaultValue = "") String pk,
+                        @RequestParam(name = "pk_tovar", defaultValue = "") String pk_tovar,
+                        Model model) {
+        model.addAttribute("pk", pk);
+
+        Connection connection = BDConnection.getConnection();
+        PreparedStatement statement = null;
+
+        List<Zapch> zapch = new ArrayList<>();
+
+        try {
+            statement = connection.prepareStatement("select * from \"Spisok_zapchastey\" s, \"Zapchast\" z where s.\"PK_zapcasti\" = z.\"PK_zapcasti\"");
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Zapch z = new Zapch();
+                z.setId(resultSet.getString("PK_zapcasti"));
+                z.setNaim(resultSet.getString("Naim"));
+                z.setTip(resultSet.getString("Tip"));
+                z.setCena(resultSet.getString("Cena"));
+                zapch.add(z);
+            }
+        } catch (SQLException e) {
+            log.error("Ошибка при обработке запроса");
+            e.printStackTrace();
+        }
+        model.addAttribute("listZapch", zapch);
+        return "remontnik/zapch";
     }
 }

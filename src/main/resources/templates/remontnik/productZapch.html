@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <title>Центр сервисного ремонта</title>
+    <link rel="stylesheet" href="/css/bootstrap.css"/>
+    <script src="/js/jquery-3.4.1.js"></script>
+    <script src="/js/bootstrap.js"></script>
+</head>
+<body>
+
+<div th:replace="remontnik/home :: menu"></div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>Добавить запчасть:</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <form th:action="@{addProductZapch}" method="post">
+                <input name="pk" type="hidden" th:value="${pk}">
+                <div class="row">
+                    <label class="col">
+                        Запчасть:
+                        <input name="tip" type="text" class="form-control">
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary">Добавить</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h1>Все запчасти:</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col" th:if="${not #lists.isEmpty(listZapch)}">
+            <table class="table table-striped">
+                <tr>
+                    <th>Идентификатор</th>
+                    <th>Тип</th>
+                    <th>Наименование</th>
+                    <th>Цена</th>
+                </tr>
+                <tr th:each="zapch : ${listZapch}">
+                    <td th:text="${zapch.id}"></td>
+                    <td th:text="${zapch.tip}"></td>
+                    <td th:text="${zapch.naim}"></td>
+                    <td th:text="${zapch.cena}"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

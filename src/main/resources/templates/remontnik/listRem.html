@@ -40,11 +40,11 @@
                             <input name="pk" type="hidden" th:value="${pk}">
                             <button type="submit" class="btn btn-dark">О товаре</button>
                         </form>
-                        <form th:action="@{productZap}" method="get">
-                            <input name="pk_tovar" type="hidden" th:value="${product.id}">
-                            <input name="pk" type="hidden" th:value="${pk}">
-                            <button type="submit" class="btn btn-info">Запчасти</button>
-                        </form>
+<!--                        <form th:action="@{productZap}" method="get">-->
+<!--                            <input name="pk_tovar" type="hidden" th:value="${product.id}">-->
+<!--                            <input name="pk" type="hidden" th:value="${pk}">-->
+<!--                            <button type="submit" class="btn btn-info">Запчасти</button>-->
+<!--                        </form>-->
                     </td>
                     <td th:text="${product.id}"></td>
                     <td th:text="${product.number}"></td>
