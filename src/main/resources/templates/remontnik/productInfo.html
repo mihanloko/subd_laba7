@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <title>Центр сервисного ремонта</title>
+    <link rel="stylesheet" href="/css/bootstrap.css"/>
+    <script src="/js/jquery-3.4.1.js"></script>
+    <script src="/js/bootstrap.js"></script>
+</head>
+<body>
+
+<div th:replace="remontnik/home :: menu"></div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>Информация о товаре:</h1>
+        </div>
+    </div>
+    <div class="row" th:if="${not productFound}">
+        <div class="col">
+            <h2>Такого товара нет!</h2>
+        </div>
+    </div>
+    <div class="row" th:if="${productFound}">
+        <div class="col-12">
+            <div>Наименование: <span class="font-weight-bold" th:text="${product.name}"></span></div>
+            <div>Заводской номер: <span class="font-weight-bold" th:text="${product.number}"></span></div>
+            <div class="row" th:if="${productDefect}">
+                <div class="col-auto">Описание проблемы:</div>
+                <div class="col-auto" th:text="${productDefect}"></div>
+            </div>
+        </div>
+        <div class="col-12">
+            <h1>Экспертные отчеты:</h1>
+            <div class="row" th:each="pin : ${listOtch}">
+                <div class="col-12 border-info border">
+                    <div>Дата: <span class="font-weight-bold" th:text="${pin.date}"></span></div>
+                    <div>Информация: <span class="d-block" th:text="${pin.info}"></span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
