@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import subd.laba7.database.BDConnection;
 import subd.laba7.entities.Product;
 import subd.laba7.entities.ProductInfo;
+import subd.laba7.entities.Zapch;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -229,5 +230,60 @@ public class RemontnikContoller {
             return "redirect:finishRem?pk=".concat(pk).concat("&pk_tovar=").concat(pk_tovar).concat("&err=Invalid date");
         }
         return "redirect:rem?pk=".concat(pk);
+    }
+
+    @RequestMapping(value = "remontnik/zapch", method = RequestMethod.GET)
+    String zapch(@RequestParam(name = "pk", defaultValue = "") String pk,
+                   Model model) {
+        model.addAttribute("pk", pk);
+
+        Connection connection = BDConnection.getConnection();
+        PreparedStatement statement = null;
+
+        List<Zapch> zapch= new ArrayList<>();
+
+        try {
+            statement = connection.prepareStatement("select * from \"Zapchast\"");
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Zapch z = new Zapch();
+                z.setId(resultSet.getString("PK_zapcasti"));
+                z.setNaim(resultSet.getString("Naim"));
+                z.setTip(resultSet.getString("Tip"));
+                z.setCena(resultSet.getString("Cena"));
+                zapch.add(z);
+            }
+        }
+        catch (SQLException e) {
+            log.error("Ошибка при обработке запроса");
+            e.printStackTrace();
+        }
+        model.addAttribute("listZapch", zapch);
+        return "remontnik/zapch";
+    }
+
+    @RequestMapping(value = "remontnik/addZapch", method = RequestMethod.POST)
+    String addZpach(@RequestParam(name = "pk", defaultValue = "") String pk,
+                                @RequestParam(name = "tip", defaultValue = "") String tip,
+                                @RequestParam(name = "naim", defaultValue = "") String naim,
+                                @RequestParam(name = "cena", defaultValue = "") String cena,
+                                Model model) {
+
+        Connection connection = BDConnection.getConnection();
+        PreparedStatement statement = null;
+
+        try {
+            statement = connection.prepareStatement("select insert_zapchast(?, ?, ?);");
+            statement.setInt(1, Integer.parseInt(tip));
+            statement.setString(2, naim);
+            statement.setInt(3, Integer.parseInt(cena));
+            statement.execute();
+        }
+        catch (SQLException e) {
+            log.error("Ошибка при обработке запроса");
+            e.printStackTrace();
+            return "redirect:zapch?pk=".concat(pk).concat("&err=Invalid adding");
+        }
+        return "redirect:zapch?pk=".concat(pk);
     }
 }
