@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <title>Центр сервисного ремонта</title>
+    <link rel="stylesheet" href="/css/bootstrap.css"/>
+    <script src="/js/jquery-3.4.1.js"></script>
+    <script src="/js/bootstrap.js"></script>
+</head>
+<body>
+
+<div th:replace="remontnik/home :: menu"></div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>Отчет о работе:</h1>
+        </div>
+    </div>
+    <div class="row" th:if="${not productFound}">
+        <div class="col">
+            <h2>Такого товара нет!</h2>
+        </div>
+    </div>
+    <div class="row" th:if="${err}">
+        <div class="col">
+            <h2 th:text="${err}"></h2>
+        </div>
+    </div>
+    <div class="row" th:if="${productFound}">
+        <div class="col-12">
+            <form th:action="@{finishRemSubmit}" method="post">
+                <input name="pk_tovar" type="hidden" th:value="${product.id}">
+                <input name="pk" type="hidden" th:value="${pk}">
+                <div class="row">
+                    <label class="col-12">
+                        Номер документа:
+                        <input name="docnum" type="text" class="form-control">
+                    </label>
+                    <label class="col-12">
+                        Дата:
+                        <input name="data" type="date" class="form-control">
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary">Завершить ремонт</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
